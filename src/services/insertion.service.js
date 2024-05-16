@@ -66,6 +66,8 @@ const insertThirumuraiSongs = async (thirumuraiSongsData) => {
 			url,
 			rawSong,
 			songNo,
+			addon,
+			type,
 			searchRawSong,
 			locale,
 			thirumuraiId,
@@ -79,13 +81,13 @@ const insertThirumuraiSongs = async (thirumuraiSongsData) => {
 
 		const thirumuraiSongsInsertSQL = `
 		INSERT INTO thirumurai_songs (title, pann, audioUrl,
-		thalam, country, author, url, rawSong,songNo, searchTitle, 
+		thalam, country, author, url,addon,type, rawSong,songNo, searchTitle, 
 		locale, thirumuraiId, prevId,
 		tamilSplit,
 		tamilExplanation,
 		tamilNotes,
 		englishTranslation,hindiTranslation)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?,?,?,?,?,?,?)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?,?, ?,?,?, ?, ?,?,?,?,?,?,?)
 	  `;
 
 		await runInsertion(thirumuraiSongsInsertSQL, [
@@ -96,6 +98,8 @@ const insertThirumuraiSongs = async (thirumuraiSongsData) => {
 			country,
 			author,
 			url,
+			addon,
+			type,
 			rawSong,
 			songNo,
 			searchRawSong,

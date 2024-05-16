@@ -12,6 +12,8 @@ const createSongsTable = `
     rawSong BLOB,
     searchTitle BLOB,
     songNo INTEGER ,
+    addon TEXT,
+    type TEXT,
     locale TEXT,
     thirumuraiId INTEGER NOT NULL,
     prevId INTEGER,
