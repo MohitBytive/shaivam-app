@@ -1,13 +1,13 @@
 const { updateSqlite } = require("../controllers/updateData.controller");
 const express = require("express");
 const router = express.Router();
-const { setDBName, getDBName } = require("../utils/dbName");
+const { setDBName } = require("../utils/dbName");
 const { connectDB } = require("../db/index");
 const createTables = require("../models/thirumuraiTables.model");
 const { getStrotrasStrapi } = require("../utils/strotraService");
 const insertStrotras = require("../services/insertDataStrotras");
 const strotrasInsertionSql = require("../utils/strotrasData");
-const updateAuthors = require("../services/updateThirumurai");
+const { playlistInsertion } = require("../services/playlistInsertion");
 router.route("/addata").post((req, res) => {
 	console.log("iin add data ");
 	console.log(req.body.model);
@@ -18,7 +18,7 @@ router.route("/addata").post((req, res) => {
 	// 		"thirumuraiSong_12"
 	// );
 
-	setDBName("thirumuraiSong_17");
+	setDBName("thirumuraiSong_41");
 	connectDB()
 		.then((db) => {
 			return createTables(db);
@@ -38,14 +38,7 @@ router.route("/addata").post((req, res) => {
 });
 
 router.route("/get").get(async (req, res) => {
-	setDBName("thirumuraiSong_7");
-	connectDB()
-		.then((db) => {
-			return updateAuthors(db);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+	const data = await playlistInsertion();
 });
 
 module.exports = router;

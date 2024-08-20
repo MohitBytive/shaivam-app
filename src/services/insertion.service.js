@@ -27,7 +27,12 @@ const insertCategory = async (data) => {
 	await runInsertion(categoryInsertSQL, dataInsertCategory);
 };
 
-const insertThirumurais = async (thirumuraisData, songsData) => {
+const insertData = async (data) => {
+	const query = `insert into special_playlists (title, fkTrimuria,prevId,strotraTitle) VALUES (?,?,?,?)`;
+	await runInsertion(query, Object.values(data));
+};
+
+const insertThirumurais = async (thirumuraisData, songsData, i) => {
 	// console.log('thiruraiData', JSON.stringify(thirumuraisData));
 
 	for (const t of thirumuraisData) {
@@ -35,26 +40,32 @@ const insertThirumurais = async (thirumuraisData, songsData) => {
 			t.attributes.Thirumurai_title,
 			t.attributes.Thirumurai_url,
 			t.attributes.fkTrimuria,
-			t.attributes.prevId,
+			t.attributes.thrimurai_order,
 			t.attributes.search_thirumurai_title,
 			t.attributes.titleNo,
 			t.attributes.title,
+			t.attributes.adaddon,
 			t.attributes.pann,
+			t.attributes.country_sequence,
 			t.attributes.audioUrl,
 			t.attributes.thalam,
 			t.attributes.country,
 			t.attributes.author,
 			t.attributes.locale,
+			t.attributes.authorNo,
+			t.attributes.orderAuthor,
 		];
 
-		const thirumuraisInsertSQL = `INSERT INTO thirumurais (title, ThirumuraiUrl, fkTrimuria, prevId, searchTitle,titleNo,titleS,pann,audioUrl,thalam,country,author,locale)
-		VALUES (?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,?,?)
+		const thirumuraisInsertSQL = `INSERT INTO thirumurais (title, ThirumuraiUrl, fkTrimuria, prevId, 
+		searchTitle,titleNo,titleS,addon,pann,
+		country_sequence,audioUrl,thalam,country,author,locale,authorNo, orderAuthor)
+		VALUES (?, ?, ?, ?, ? ,? ,? ,? ,? ,?,? ,?,? ,?,?,?,?)
 	  `;
 		await runInsertion(thirumuraisInsertSQL, dataThirumuraiInsert);
 	}
-	await insertThirumuraiSongs(songsData);
+	await insertThirumuraiSongs(songsData, i);
 };
-const insertThirumuraiSongs = async (thirumuraiSongsData) => {
+const insertThirumuraiSongs = async (thirumuraiSongsData, i) => {
 	for (const song of thirumuraiSongsData) {
 		const {
 			title,
@@ -68,8 +79,9 @@ const insertThirumuraiSongs = async (thirumuraiSongsData) => {
 			songNo,
 			searchRawSong,
 			locale,
+			type,
+			addon,
 			thirumuraiId,
-			refId,
 			tamilSplit,
 			tamilExplanation,
 			tamilNotes,
@@ -77,15 +89,18 @@ const insertThirumuraiSongs = async (thirumuraiSongsData) => {
 			hindiTranslation,
 		} = song.attributes;
 
+		const thrimurai_order = i < 39 ? song.attributes.titleNo : song.attributes.sequence;
+
 		const thirumuraiSongsInsertSQL = `
 		INSERT INTO thirumurai_songs (title, pann, audioUrl,
 		thalam, country, author, url, rawSong,songNo, searchTitle, 
-		locale, thirumuraiId, prevId,
+		locale,type,
+		addon, thirumuraiId, prevId,
 		tamilSplit,
 		tamilExplanation,
 		tamilNotes,
 		englishTranslation,hindiTranslation)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?,?,?,?,?,?,?)
+		VALUES (?, ?, ?, ?, ?, ?,?,?, ?, ?,?, ?, ?, ?,?,?,?,?,?,?)
 	  `;
 
 		await runInsertion(thirumuraiSongsInsertSQL, [
@@ -100,8 +115,10 @@ const insertThirumuraiSongs = async (thirumuraiSongsData) => {
 			songNo,
 			searchRawSong,
 			locale,
+			type,
+			addon,
 			thirumuraiId,
-			refId,
+			thrimurai_order,
 			tamilSplit,
 			tamilExplanation,
 			tamilNotes,
@@ -138,4 +155,5 @@ module.exports = {
 	insertThirumurais,
 	insertThirumuraiSongs,
 	insertOdhuvars,
+	insertData,
 };

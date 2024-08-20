@@ -1,22 +1,14 @@
 const { connectDB } = require("../db/index");
-const createTables = require("../models/thirumuraiTables.model");
+
 const fs = require("fs");
 const { createComposite } = require("../services/compositeKeys");
-const updateAuthors = require("../services/updateThirumurai");
-
 const { uploadFile } = require("../utils/uploadS3");
 const archiver = require("archiver");
 const { getDBName } = require("../utils/dbName");
-const { updateTrimuria, latestDumpData } = require("../services/saveFileStrapi");
 const { getThirumuraiCategory } = require("../utils/api.service");
-const {
-	insertCategory,
-	insertThirumurais,
-	insertThirumuraiSongs,
-	insertOdhuvars,
-	runInsertion,
-} = require("./insertion.service");
+const { insertCategory, insertThirumurais, insertOdhuvars } = require("./insertion.service");
 const strotrasInsertion = require("../services/strotras.service");
+const { playlistInsertion } = require("./playlistInsertion");
 
 let idData;
 const insertDataIntoTables = async () => {
@@ -26,21 +18,21 @@ const insertDataIntoTables = async () => {
 		console.log("after connected To DB");
 
 		strotrasInsertion();
+		const bool = await playlistInsertion();
 		// insertAuthorData();
-		// console.log('insertion of strotras and author data is completed !!');
-		for (let i = 45; i < 59; i++) {
-			//45-----59
 
+		for (let i = 29; i < 43; i++) {
+			//29-----42
 			const data = await getThirumuraiCategory(i.toString());
 			console.log(i);
 			await insertCategory(data);
 			await insertThirumurais(
 				data.attributes.thirumurais.data,
-				data.attributes.thirumurai_songs.data
+				data.attributes.thirumurai_songs.data,
+				i
 			);
 			await insertOdhuvars(data.attributes.odhuvars.data, data.attributes.name);
 		}
-		updateAuthors();
 
 		createComposite();
 
@@ -62,7 +54,6 @@ const insertDataIntoTables = async () => {
 		archive.file(`D:\\bytiveWorkSpace\\shaivam-app\\${getDBName()}.db`, {
 			name: `${getDBName()}.db`,
 		});
-
 		archive.finalize();
 	} catch (error) {
 		console.error("Error inserting data:", error.message);

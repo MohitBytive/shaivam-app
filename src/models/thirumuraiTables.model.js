@@ -6,12 +6,16 @@ const createSongsTable = require("./thirumuraiSongs.model");
 const createOdhuvarsTableSQL = require("./odhuvars.model");
 const createStrotrasTableSQL = require("./strotras.model");
 const createCategoryTableSQL = require("./category.model");
-
+const createSpecialPlaylistTableSQL = require("./specailplaylists.model");
 
 const createTables = async (db) => {
 	try {
 		// const db = await connectDB(); // Wait for the database connection
 		console.log("Function triggered");
+
+		db.run(createSpecialPlaylistTableSQL);
+		console.log("SpecialPlaylist table created successfully.");
+
 		db.run(createCategoryTableSQL);
 		console.log("category table created successfully.");
 

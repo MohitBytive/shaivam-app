@@ -9,25 +9,25 @@ const indexQuery1 = `
 `;
 
 const runQuery = (query) => {
-  return new Promise((resolve, reject) => {
-    db().run(query, (err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
+	return new Promise((resolve, reject) => {
+		db().run(query, (err) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve();
+			}
+		});
+	});
 };
 
 const createComposite = async () => {
-  try {
-    await runQuery(indexQuery1);
-    await runQuery(indexQuery2);
-    console.log("Indexes created successfully");
-  } catch (error) {
-    console.error("Error creating indexes:", error);
-  }
+	try {
+		await runQuery(indexQuery1);
+		await runQuery(indexQuery2);
+		console.log("Indexes created successfully");
+	} catch (error) {
+		console.error("Error creating indexes:", error);
+	}
 };
 
 module.exports = { createComposite };
