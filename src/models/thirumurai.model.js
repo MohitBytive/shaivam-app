@@ -15,7 +15,9 @@ const createThirumuraiTable = `
     refId TEXT,
     searchTitle TEXT,	
     authorNo INTEGER,
+    addon TEXT,
     orderAuthor INTEGER,
+    country_sequence INTEGER,
     locale TEXT,
     FOREIGN KEY (fkTrimuria) REFERENCES category(prevId),
     FOREIGN KEY (prevId) REFERENCES thirumurais(id)

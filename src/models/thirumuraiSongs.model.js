@@ -13,6 +13,8 @@ const createSongsTable = `
     searchTitle BLOB,
     songNo INTEGER ,
     locale TEXT,
+    addon Text,
+    type Text,
     thirumuraiId INTEGER NOT NULL,
     prevId INTEGER,
     tamilSplit BLOB,
