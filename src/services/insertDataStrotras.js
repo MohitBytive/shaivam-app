@@ -1,6 +1,5 @@
 const { db } = require("../db/index");
 
-
 const runInsertion = (insertDataSQL, dataToInsert) => {
 	return new Promise((resolve, reject) => {
 		db().run(insertDataSQL, dataToInsert, (err) => {
@@ -13,15 +12,13 @@ const runInsertion = (insertDataSQL, dataToInsert) => {
 	});
 };
 
-
-const insertStrotras = async (strotras) => {
-	
+const insertStrotras = async (strotras, locale) => {
 	const s = strotras.attributes;
 	const insertData = [
 		s.Scripture_title,
 		s.Scripture_url,
 		s.scripture_order,
-		s.locale,
+		locale,
 		s.scripture_content,
 		s.audio_url,
 		s.description,

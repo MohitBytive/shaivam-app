@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const getStrotrasStrapi = async (page) => {
 	try {
-		const uri = `https://qa-admin.shaivam.in/api/scriptures?pagination[pageSize]=25&pagination[page]=${page}`;
+		const uri = `https://prod-admin.shaivam.in/api/scriptures?filters[mobile][$eq]=true&populate=language&pagination[pageSize]=25&pagination[page]=${page}`;
 		const res = axios.get(`${uri}`);
 		const data = await res;
 		return data;
@@ -11,4 +11,4 @@ const getStrotrasStrapi = async (page) => {
 	}
 };
 
-module.exports =  getStrotrasStrapi ;
+module.exports = getStrotrasStrapi;

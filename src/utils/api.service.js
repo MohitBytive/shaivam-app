@@ -1,13 +1,12 @@
 const axios = require("axios");
-
+const { BASE_URL } = require("../constants/constants");
 const getThirumuraiCategory = async (id) => {
 	try {
-		const baseURL = `https://qa-admin.shaivam.in/api/trimurai-categories`;
 		const res = await axios.get(
-			`${baseURL}/${id}?populate=thirumurais&populate=thirumurai_songs&populate=odhuvars`
+			`${BASE_URL}/api/trimurai-categories/${id}?populate=thirumurais&populate=thirumurai_songs&populate=odhuvars`
 		);
 		console.log(
-			`${baseURL}/${id}?populate=thirumurais&populate=thirumurai_songs&populate=odhuvars`
+			`${BASE_URL}/api/trimurai-categories/${id}?populate=thirumurais&populate=thirumurai_songs&populate=odhuvars`
 		);
 		const data = await res?.data?.data;
 		return data;
