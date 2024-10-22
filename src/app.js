@@ -16,8 +16,7 @@ app.use(
 	})
 );
 
-// const {updateData} = require("./routes/updateData.routes");
-const  router = require("./routes/updateData.routes");
+const router = require("./routes/updateData.routes");
 app.use("/api/v1/data", router);
 
 module.exports = app;
