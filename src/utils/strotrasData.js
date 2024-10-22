@@ -17,7 +17,7 @@ function getLocaleAbbreviation(language) {
 		Kannada: "kn",
 		Malayalam: "ml",
 		Marathi: "mr",
-		Odia: "or",
+		Oriya: "or",
 		Punjabi: "pa",
 		Sanskrit: "sa",
 		Sinhala: "si",
@@ -34,8 +34,7 @@ const strotrasInsertionSql = async (strotras) => {
 		if (locale === "English-Articles" && locale === "English-Translation") {
 		} else {
 			let l = getLocaleAbbreviation(locale);
-			const res = insertStrotras(s, l);
-			console.log("🚀 ~ strotrasInsertionSql ~ locale:", locale);
+			const res = await insertStrotras(s, l);
 		}
 	}
 };

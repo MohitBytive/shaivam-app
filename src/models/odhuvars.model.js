@@ -3,10 +3,11 @@ const createOdhuvarsTableSQL = `
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     artist TEXT,
     title TEXT,
+    titleNo TEXT,
     thalamOdhuvarTamilname TEXT,
     url BLOB,
     thirumariasiriyar TEXT,
-    categoryName TEXT,
-    FOREIGN KEY (categoryName) REFERENCES category(name)
+    categoryId INTEGER,
+    sequence INTEGER
   )`;
-  module.exports = createOdhuvarsTableSQL;
+module.exports = createOdhuvarsTableSQL;

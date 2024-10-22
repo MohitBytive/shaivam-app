@@ -7,19 +7,18 @@ const archiver = require("archiver");
 const { getDBName } = require("../utils/dbName");
 const { getThirumuraiCategory } = require("../utils/api.service");
 const { insertCategory, insertThirumurais, insertOdhuvars } = require("./insertion.service");
-const strotrasInsertion = require("../services/strotras.service");
-const { playlistInsertion } = require("./playlistInsertion");
+const { runTasks } = require("./runTasks");
+const { main } = require("./shaivaSiddhantaModules");
 
+const { veda_main } = require("./veda/VedaMain");
 let idData;
 const insertDataIntoTables = async () => {
 	try {
 		console.log("in insertDat Into tables");
 		await connectDB();
 		console.log("after connected To DB");
-
-		strotrasInsertion();
-		const bool = await playlistInsertion();
-		// insertAuthorData();
+		await runTasks();
+		await main();
 
 		for (let i = 29; i < 43; i++) {
 			//29-----42
@@ -31,12 +30,12 @@ const insertDataIntoTables = async () => {
 				data.attributes.thirumurai_songs.data,
 				i
 			);
-			await insertOdhuvars(data.attributes.odhuvars.data, data.attributes.name);
+			await insertOdhuvars(data.attributes.odhuvars.data, data.attributes.prevId);
 		}
 
 		createComposite();
-
-		const output = fs.createWriteStream(`D:\\bytiveWorkSpace\\shaivam-app\\${getDBName()}.zip`);
+		await veda_main();
+		const output = fs.createWriteStream(`E:\\bytiveWorkSpace\\shaivam-app\\${getDBName()}.zip`);
 		const archive = archiver("zip", {
 			zlib: { level: 9 }, // Compression level.
 		});
@@ -57,8 +56,6 @@ const insertDataIntoTables = async () => {
 		archive.finalize();
 	} catch (error) {
 		console.error("Error inserting data:", error.message);
-	} finally {
-		console.log("finally");
 	}
 };
 

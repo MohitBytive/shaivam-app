@@ -3,9 +3,12 @@ let db;
 const { getDBName } = require("../utils/dbName");
 const connectDB = () => {
 	return new Promise((resolve, reject) => {
+		console.log("🚀 ~ tempDB ~ getDBName:", getDBName());
 		try {
 			const tempDB = new sqlite3.Database(`${getDBName()}.db`, (err) => {
+				console.log("🚀 ~ tempDB ~ tempDB:", tempDB);
 				if (err) {
+					console.log("🚀 ~ tempDB ~ err:", err);
 					console.error("Error opening database:", err.message);
 					reject(err);
 				} else {

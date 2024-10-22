@@ -47,7 +47,10 @@ const insertThirumurais = async (thirumuraisData, songsData, i) => {
 			t.attributes.adaddon,
 			t.attributes.pann,
 			t.attributes.country_sequence,
-			t.attributes.audioUrl,
+			t.attributes.audioUrl?.replace(
+				"http://www.shaivam.org",
+				"https://shaivamfiles.fra1.cdn.digitaloceanspaces.com"
+			),
 			t.attributes.thalam,
 			t.attributes.country,
 			t.attributes.author,
@@ -130,20 +133,29 @@ const insertThirumuraiSongs = async (thirumuraiSongsData, i) => {
 
 const insertOdhuvars = async (odhuvarsData, categoryName) => {
 	for (const o of odhuvarsData) {
-		const { Odhuvarname, Pathigam, Odhuvar_Tamilname, Audio_Url, thirumariasiriyar } =
-			o.attributes;
+		const {
+			Odhuvarname,
+			Pathigam,
+			Odhuvar_Tamilname,
+			Pathikam_No,
+			Audio_Url,
+			thirumariasiriyar,
+			sequence,
+		} = o.attributes;
 
 		const odhuvarsInsertSQL = `
-		INSERT INTO odhuvars (artist, title, thalamOdhuvarTamilname, url, thirumariasiriyar, categoryName)
-		VALUES (?, ?, ?, ?, ?, ?)
+		INSERT INTO odhuvars (artist, title, titleNo,thalamOdhuvarTamilname, url, thirumariasiriyar, sequence,categoryId)
+		VALUES (?, ?, ?, ?, ?, ?,?,?)
 	  `;
 
 		await runInsertion(odhuvarsInsertSQL, [
 			Odhuvarname,
 			Pathigam,
+			Pathikam_No,
 			Odhuvar_Tamilname,
 			Audio_Url,
 			thirumariasiriyar,
+			sequence,
 			categoryName,
 		]);
 	}

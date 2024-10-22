@@ -21,9 +21,12 @@ const insertStrotras = async (strotras, locale) => {
 		locale,
 		s.scripture_content,
 		s.audio_url,
-		s.description,
+		s.text_description,
+		JSON.stringify(s.odhuvar_json),
+		s?.additionalInfromation,
+		s?.composer,
 	];
-	const insertQuery = `INSERT INTO strotras (title,strotras_url,strotras_order,locale,strotras_content,audio_url,description) VALUES(?,?,?,?,?,?,?);   `;
+	const insertQuery = `INSERT INTO strotras (title,strotras_url,strotras_order,locale,strotras_content,audio_url,description,odhuvar, additionalInfromation, composer) VALUES(?,?,?,?,?,?,?,?,?,?);`;
 
 	await runInsertion(insertQuery, insertData);
 };

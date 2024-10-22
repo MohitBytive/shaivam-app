@@ -8,8 +8,10 @@ CREATE TABLE IF NOT EXISTS strotras (
         strotras_content TEXT,
         audio_url TEXT,
         description BLOB,
-        played INTEGER
-)`
-;
-
+        played INTEGER,
+        sequence INTEGER,
+        odhuvar TEXT,
+        additionalInfromation TEXT,
+        composer TEXT
+)`;
 module.exports = createStrotrasTableSQL;

@@ -5,10 +5,9 @@ const { setDBName } = require("../utils/dbName");
 const { connectDB } = require("../db/index");
 const createTables = require("../models/thirumuraiTables.model");
 const { getStrotrasStrapi } = require("../utils/strotraService");
-const insertStrotras = require("../services/insertDataStrotras");
-const strotrasInsertionSql = require("../utils/strotrasData");
-const { playlistInsertion } = require("../services/playlistInsertion");
-router.route("/addata").post((req, res) => {
+const { main } = require("../services/veda/veda.service");
+
+router.route("/dump").post((req, res) => {
 	console.log("iin add data ");
 	console.log(req.body.model);
 	// if (req.body.model == "app-dump-update") {
@@ -18,7 +17,7 @@ router.route("/addata").post((req, res) => {
 	// 		"thirumuraiSong_12"
 	// );
 
-	setDBName("thirumuraiSong_41");
+	setDBName("thirumuraiSong_59");
 	connectDB()
 		.then((db) => {
 			return createTables(db);
@@ -38,7 +37,10 @@ router.route("/addata").post((req, res) => {
 });
 
 router.route("/get").get(async (req, res) => {
-	const data = await playlistInsertion();
+	// await main();
+
+	const data = await main();
+	res.send(data);
 });
 
 module.exports = router;

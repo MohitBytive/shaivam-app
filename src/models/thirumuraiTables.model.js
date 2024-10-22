@@ -6,14 +6,46 @@ const createSongsTable = require("./thirumuraiSongs.model");
 const createOdhuvarsTableSQL = require("./odhuvars.model");
 const createStrotrasTableSQL = require("./strotras.model");
 const createCategoryTableSQL = require("./category.model");
+const {
+	createAudioAlbumTable,
+	createAudioPlaylistTable,
+	createShaivaSiddhantaTable,
+	createShaivaSiddhantaBooksTable,
+} = require("../models/shaivaSiddhanta.model");
+
+const {
+	createVedasTable,
+	createVedaShakaTable,
+	createVedaSuktamTable,
+	createVedaMantraTable,
+	createVedaChanterTable,
+} = require("../models/veda.model");
 const createSpecialPlaylistTableSQL = require("./specailplaylists.model");
 
 const createTables = async (db) => {
 	try {
 		// const db = await connectDB(); // Wait for the database connection
 		console.log("Function triggered");
+		db.run(createVedasTable);
+		db.run(createVedaShakaTable);
+		console.log(" createVedaShakaTable  table created shaka table");
+		db.run(createVedaSuktamTable);
+		db.run(createVedaMantraTable);
+		db.run(createVedaChanterTable);
 
+		db.run(createAudioAlbumTable);
+		console.log(" createAudioAlbumTable  table created successfully");
+
+		db.run(createAudioPlaylistTable);
+		console.log("AudioPlaylist table created successfully");
+
+		db.run(createShaivaSiddhantaTable);
+		console.log("ShaivaSiddhanta table created successfully");
+
+		db.run(createShaivaSiddhantaBooksTable);
+		console.log("ShaivaSiddhantaBooks table created successfully");
 		db.run(createSpecialPlaylistTableSQL);
+
 		console.log("SpecialPlaylist table created successfully.");
 
 		db.run(createCategoryTableSQL);
